@@ -25,7 +25,6 @@
 	}
 
 	onMount(() => {
-		//@ts-expect-error
 		window.TestFunction = () => {
 			alert('Test function');
 		};
