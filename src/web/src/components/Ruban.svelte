@@ -14,7 +14,7 @@
 		1425: -4
 	};
 
-	export let values: (string | number | null)[] = []; // Valeurs du ruban
+	export let values: number[] = []; // Valeurs du ruban
 
 	// On ajoute des éléments nulls au début et à la fin du ruban pour l'effet infini
 	// Nombre d'éléments nulls à ajouter au début et à la fin du ruban
@@ -123,9 +123,9 @@
 	/**
 	 * Lit la cellule à la position du curseur
 	 */
-	export function readCell(): string | number | null {
+	export function readCell(): number {
 		let cell = values[cursorPosition];
-		if (cell === undefined || cell === null || cell === ' ') cell = '';
+		if (cell === undefined || cell === null) cell = 0;
 		return cell;
 	}
 
@@ -133,7 +133,7 @@
 	 * Écrit dans la cellule à la position du curseur
 	 * @param value Valeur à écrire
 	 */
-	export function writeCell(value: string | number | null) {
+	export function writeCell(value: number) {
 		if (cursorPosition < 0) {
 			values.unshift(...Array(Math.abs(cursorPosition)).fill(null));
 			cursorPosition = 0;
@@ -142,6 +142,15 @@
 			values.push(...Array(cursorPosition - values.length + 1).fill(null));
 		}
 		values[cursorPosition] = value;
+	}
+
+	export function changeCell(value: 'increment' | 'decrement') {
+		let cell = readCell();
+
+		if (value === 'increment') cell++;
+		else cell--;
+
+		writeCell(cell);
 	}
 </script>
 

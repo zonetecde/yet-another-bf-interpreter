@@ -1,3 +1,9 @@
+
+
+
+from interpreter import Interprerteur
+
+
 class Api:
     """Classe Api
     Cette classe permet la communication entre le code python
@@ -13,7 +19,7 @@ class Api:
     """
 
     def __init__(self):
-        pass
+        self.interpreteur = Interprerteur(99999)
 
     def set_window(self, window):
         """Set l'objet window pour pouvoir communiquer avec le code JS
@@ -23,25 +29,34 @@ class Api:
         """
         self.window = window
 
-    def getThingFromPython(self):
+    def stopExecution(self):
+        """Ex: cette fonction est appelé par le code javascript
+        lors du clique sur le bouton stop
+
+        Returns:
+            bool: True si l'execution est bien stoppé
+        """
+        print("Execution stoppé")
+        self.interpreteur.stopExecution = True
+        return True
+
+    def interpretCode(self, programme, speed):
         """Ex: cette fonction est appelé par le code javascript
         lors du clique sur le titre principal
 
         Returns:
             obj: Un objet avec tout ce qu'on veut renvoyer à la page
         """
+        self.interpreteur.speed = speed
+        self.interpreteur.interpreteur(programme, self.call_js_function)
 
-        # création de l'objet à renvoyer
-        reponse = {
-            'thing': 'hi there',
-            'age': 34,
-            'aaa': [1, 2, 3]
-        }
+        return True # fin de l'execution
+    
+    def changeSpeed(self, speed):
+        self.interpreteur.speed = speed
 
-        # [test] : on appel ici une fonction javascript depuis python
-        self.call_js_function("TestFunction", '"yes"')
-
-        return reponse
+    def setUserInput(self, userInput):
+        self.interpreteur.userInput = userInput
     
     def call_js_function(self, function_name, params):
         """Appel une fonction javascript dans la page web

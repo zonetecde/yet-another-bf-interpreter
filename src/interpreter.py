@@ -1,10 +1,13 @@
-from api.api import Api
+from time import sleep
 from pile import *
 
-class Brainfuck:
+class Interprerteur:
     """
     Initialisation de l'interpreteur
     """
+    stopExecution = False
+    speed = 1
+    userInput = None
     
     def __init__(self, n = 10):
         self.tableau = [0 for i in range(n)]
@@ -33,7 +36,7 @@ class Brainfuck:
             
         return (pile.est_vide(), positions_des_crochets if pile.est_vide() else [])
 
-    def interpreteur(self, instructions: str):
+    def interpreteur(self, instructions: str, call_js_function):
         """Interpreteur du language brainfuck
 
         Args:
@@ -48,46 +51,62 @@ class Brainfuck:
 
         # tant qu'on est dans les limites du programme
         while instructionIndex < len(instructions):
+            if self.stopExecution:
+                self.stopExecution = False
+                return
+
             # instruction actuelle
             char = instructions[instructionIndex]
 
             # avance le pointeur à droite si possible, sinon erreur.
-            if char is '>':
+            if char == '>':
                 assert self.pointeur < len(self.tableau), "Brainfuck index out of range"
                 self.pointeur += 1
                 instructionIndex +=1
+                call_js_function("move", '"right"')
             # recule le pointeur à gauche si possible, sinon erreur.
-            elif char is '<':
+            elif char == '<':
                 assert self.pointeur > 0, "Brainfuck index out of range"
                 self.pointeur -= 1
                 instructionIndex +=1
+                call_js_function("move", '"left"')
             # augmente d'1 l'octet pointé
-            elif char is '+':
+            elif char == '+':
                 #j'ai mis l'assert en commentaire car le programme en amélioration ne prend pas en compte cette limite
                 #assert self.tableau[self.pointeur] < 255, "Brainfuck does not support values bigger than one byte"
                 self.tableau[self.pointeur] += 1
                 instructionIndex +=1
+                call_js_function("change", '"increment"')
             # soustrait d'1 l'octet pointé
-            elif char is '-':
-                assert self.tableau[self.pointeur] > 0, "Brainfuck does not support negative values"
+            elif char == '-':
+                #assert self.tableau[self.pointeur] > 0, "Brainfuck does not support negative values"
                 self.tableau[self.pointeur] -= 1
                 instructionIndex +=1
+                call_js_function("change", '"decrement"')
             # Affiche le caractère pointé dans la table ASCII
-            elif char is '.':
+            elif char == '.':
                 print(chr(self.tableau[self.pointeur]))
                 instructionIndex +=1
+                call_js_function("print")
             # Entre un nbre à la case pointée
-            elif char is ',':
-                value = input("Entrez un caractère à insérer")
-                assert ord(value) >= 0 and ord(value) <= 255, value + " ne peut être codé sur un byte"
-                self.tableau[self.pointeur] = ord(value)
+            elif char == ',':
                 instructionIndex +=1
+                call_js_function("input")
+
+                while self.userInput is None:
+                    sleep(0.5)
+
+                self.tableau[self.pointeur] = ord(self.userInput)
+                self.userInput = None
+                    
+
             # Affiche l'octet pointé
-            elif char is '!':
+            elif char == '!':
                 print(self.tableau[self.pointeur])
                 instructionIndex +=1
+                call_js_function("printBytes", self.tableau[self.pointeur])
             # Entre dans une boucle
-            elif char is '[':
+            elif char == '[':
                 if self.tableau[self.pointeur] == 0:
                     for index_parenthese_ouvrante, index_parenthese_fermante in parenthesage[1]:
                         if index_parenthese_ouvrante == instructionIndex:
@@ -96,7 +115,7 @@ class Brainfuck:
                 else:
                     instructionIndex +=1   
             # Sort de la boucle - entre dedans encore une fois
-            elif char is ']':
+            elif char == ']':
                 if self.tableau[self.pointeur] != 0:
                     for index_parenthese_ouvrante, index_parenthese_fermante in parenthesage[1]:
                         if index_parenthese_fermante == instructionIndex:
@@ -104,6 +123,10 @@ class Brainfuck:
                             break
                 else:
                     instructionIndex +=1
+
+            # wait `speed` ms
+            if char != '[' and char != ']':
+                sleep(self.speed)
 
         return self.tableau
         
