@@ -120,7 +120,7 @@ class Interprerteur:
                     instructionIndex +=1
 
             # wait `speed` ms
-            if char != '[' and char != ']' and self.speed > 0.1:
+            if char != '[' and char != ']' :
                 sleep(self.speed)
 
         return self.tableau

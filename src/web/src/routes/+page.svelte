@@ -5,6 +5,7 @@
 	import Programme from '../components/Programme.svelte';
 	import { slide, fade } from 'svelte/transition';
 	import { cursorPos } from '../stores/store';
+	import toast from 'svelte-french-toast';
 
 	let ruban: Ruban;
 	let speed = 1;
@@ -44,11 +45,11 @@
 		};
 
 		window.printBytes = (byte: number) => {
-			alert('[!] - Valeur de la cellule : ' + byte);
+			toast.success(`[!] - Valeur de la cellule : ${byte}`);
 		};
 
 		window.printChar = (text: string) => {
-			alert('[.] - Valeur de la cellule (convertie en ASCII) : ' + text);
+			toast.success('[.] - Valeur de la cellule (convertie en ASCII) : ' + text);
 		};
 
 		window.userInput = () => {
@@ -129,7 +130,7 @@
 	</svg>
 </button>
 
-<div class="flex justify-center overflow-visible relative flex-col">
+<div class="flex justify-center relative flex-col w-screen h-screen bg-violet-300 pt-20 pb-8">
 	<Ruban bind:this={ruban} bind:values />
 
 	<textarea
@@ -154,7 +155,7 @@
 			<input
 				class="ml-2"
 				type="range"
-				min="0.1"
+				min="0"
 				max="3"
 				step="0.01"
 				bind:value={speed}
