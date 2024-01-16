@@ -178,7 +178,7 @@
 			stroke-width="1.5"
 			stroke="skyblue"
 			data-slot="icon"
-			class="w-6 h-6 absolute left-1/2 top-[4.5rem] z-20 bg-blue-700 rounded-full pt-0.5"
+			class="w-6 h-6 absolute left-1/2 top-[3rem] z-20 bg-blue-700 rounded-full pt-0.5"
 		>
 			<path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
 		</svg>

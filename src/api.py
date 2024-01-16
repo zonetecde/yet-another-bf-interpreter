@@ -36,7 +36,7 @@ class Api:
         Returns:
             bool: True si l'execution est bien stoppé
         """
-        print("Execution stoppé")
+        print("Execution stoppée")
         self.interpreteur.stopExecution = True
         return True
 
@@ -49,7 +49,11 @@ class Api:
         """
         self.interpreteur = Interprerteur(99999)
         self.interpreteur.speed = speed
-        self.interpreteur.interpreteur(programme, self.call_js_function)
+        try:
+            self.interpreteur.interpreteur(programme, self.call_js_function)
+        except Exception as e:
+            print(e)
+            return False
 
         return True # fin de l'execution
     

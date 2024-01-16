@@ -50,6 +50,8 @@ class Interprerteur:
 
         # tant qu'on est dans les limites du programme
         while instructionIndex < len(instructions):
+            ignorer = False
+
             if self.stopExecution:
                 self.stopExecution = False
                 return
@@ -118,9 +120,12 @@ class Interprerteur:
                             break
                 else:
                     instructionIndex +=1
+            else:
+                instructionIndex +=1 # ignore les autres caractères
+                ignorer = True
 
             # wait `speed` ms
-            if char != '[' and char != ']' :
+            if char != '[' and char != ']' and not ignorer :
                 sleep(self.speed)
 
         return self.tableau

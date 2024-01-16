@@ -8,10 +8,11 @@
 	import toast from 'svelte-french-toast';
 
 	let ruban: Ruban;
-	let speed = 1;
+	let speed = 0.5;
 	let isExecuting = false;
 	let programme: string = '+>>++++++++++[<<[>++<-]>[<+>-]>-]<<!';
 	let openMenu = false;
+	let showInfo = false;
 
 	let values: number[] = [];
 
@@ -130,7 +131,7 @@
 	</svg>
 </button>
 
-<div class="flex justify-center relative flex-col w-screen h-screen bg-violet-300 pt-20 pb-8">
+<div class="flex relative flex-col w-screen h-screen bg-violet-300 pt-20 pb-8">
 	<Ruban bind:this={ruban} bind:values />
 
 	<textarea
@@ -156,7 +157,7 @@
 				class="ml-2"
 				type="range"
 				min="0"
-				max="3"
+				max="1.5"
 				step="0.01"
 				bind:value={speed}
 				on:input={() => {
@@ -166,4 +167,49 @@
 			<p class="ml-2 text-sm">{speed} sec</p>
 		</div>
 	</div>
+
+	<button class="w-12 h-12 absolute bottom-2 right-2" on:click={() => (showInfo = true)}>
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			fill="none"
+			viewBox="0 0 24 24"
+			stroke-width="1.5"
+			stroke="purple"
+		>
+			<path
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
+			/>
+		</svg>
+	</button>
+
+	{#if showInfo}
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<!-- svelte-ignore a11y-no-static-element-interactions -->
+		<div
+			class="fixed flex items-center justify-center top-0 left-0 w-screen h-screen bg-black bg-opacity-50 z-30"
+			transition:fade
+			on:click={() => (showInfo = false)}
+		>
+			<div
+				class="fixed flex flex-col items-center justify-center w-4/6 h-4/6 bg-white shadow-2xl text-center px-8 z-40 pt-12 rounded-2xl border-4 border-purple-500"
+				transition:slide={{ axis: 'x' }}
+			>
+				<h1 class="text-xl font-bold mb-auto">
+					Mais dit moi Jammy, comment cela fonctionne-t-il ?
+				</h1>
+
+				<p class="mt-4 text-base mb-auto">
+					Le package permettant de faire interagir l'interpreteur codé python et cette fenêtre web
+					(svelte X typescript) est <span class="font-bold">pywebview</span>. Ainsi j'ai pu exprimer
+					mes talents de développeur web pour faire une interface graphique à mon interpréteur.
+					<br />
+					<br />
+					Vous pouvez notamment aller voir les classes <span class="font-bold">Api</span> et
+					<span class="font-bold">Interpreteur</span> dans le code python pour mieux comprendre le fonctionnement.
+				</p>
+			</div>
+		</div>
+	{/if}
 </div>
