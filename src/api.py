@@ -58,7 +58,7 @@ class Api:
     def setUserInput(self, userInput):
         self.interpreteur.userInput = userInput
     
-    def call_js_function(self, function_name, params):
+    def call_js_function(self, function_name, params = ""):
         """Appel une fonction javascript dans la page web
 
         Args:
@@ -66,7 +66,7 @@ class Api:
             params (str): Les paramètres à passé à la fonction
                           Attention à ne pas oublier de mettre des "" s'il s'agit d'un str
         """
-        self.window.evaluate_js("window.{function}({params})"
+        return self.window.evaluate_js("window.{function}({params})"
                                 .format(function = function_name, 
                                         params = params))
     

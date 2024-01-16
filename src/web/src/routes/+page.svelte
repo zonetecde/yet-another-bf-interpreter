@@ -35,13 +35,18 @@
 			ruban.changeCell(value);
 		};
 
-		window.printBytes = () => {
-			alert('[!] - Valeur de la cellule : ' + ruban.readCell());
+		window.printBytes = (byte: number) => {
+			alert('[!] - Valeur de la cellule : ' + byte);
 		};
 
-		window.input = () => {
-			alert('[?] - Valeur de la cellule : ');
-			const value = prompt('[?] - Valeur à écrire : ');
+		window.printChar = (text: string) => {
+			alert('[.] - Valeur de la cellule (convertie en ASCII) : ' + text);
+		};
+
+		window.userInput = () => {
+			const value = prompt(
+				'[,] - Valeur à écrire (elle sera convertie en son équivalent décimal) : '
+			);
 
 			if (value === null) return;
 
@@ -49,7 +54,7 @@
 
 			ruban.writeCell(byte);
 
-			Api.api.setUserInput(byte);
+			return byte;
 		};
 	});
 </script>

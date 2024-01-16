@@ -87,16 +87,13 @@ class Interprerteur:
             elif char == '.':
                 print(chr(self.tableau[self.pointeur]))
                 instructionIndex +=1
-                call_js_function("print")
+                call_js_function("printChar", "\"" + chr(self.tableau[self.pointeur]) + "\"")
             # Entre un nbre à la case pointée
             elif char == ',':
                 instructionIndex +=1
-                call_js_function("input")
 
-                while self.userInput is None:
-                    sleep(0.5)
+                self.tableau[self.pointeur]  = call_js_function("userInput")
 
-                self.tableau[self.pointeur] = ord(self.userInput)
                 self.userInput = None
                     
 
@@ -105,6 +102,7 @@ class Interprerteur:
                 print(self.tableau[self.pointeur])
                 instructionIndex +=1
                 call_js_function("printBytes", self.tableau[self.pointeur])
+
             # Entre dans une boucle
             elif char == '[':
                 if self.tableau[self.pointeur] == 0:

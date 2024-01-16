@@ -10,10 +10,12 @@ declare global {
 	}
 
 	interface Window {
+		printChar: (text: string) => void;
+		printBytes: (bytes: number) => void;
+
 		move: (direction: 'left' | 'right') => void;
 		change: (direction: 'increment' | 'decrement') => void;
-		printBytes: (bytes: number) => void;
-		input: () => void;
+		userInput: () => void;
 	}
 }
 
