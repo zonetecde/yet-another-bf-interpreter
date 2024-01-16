@@ -47,6 +47,7 @@ class Api:
         Returns:
             obj: Un objet avec tout ce qu'on veut renvoyer à la page
         """
+        self.interpreteur = Interprerteur(99999)
         self.interpreteur.speed = speed
         self.interpreteur.interpreteur(programme, self.call_js_function)
 
@@ -54,9 +55,6 @@ class Api:
     
     def changeSpeed(self, speed):
         self.interpreteur.speed = speed
-
-    def setUserInput(self, userInput):
-        self.interpreteur.userInput = userInput
     
     def call_js_function(self, function_name, params = ""):
         """Appel une fonction javascript dans la page web

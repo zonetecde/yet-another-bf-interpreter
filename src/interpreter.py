@@ -7,7 +7,6 @@ class Interprerteur:
     """
     stopExecution = False
     speed = 1
-    userInput = None
     
     def __init__(self, n = 10):
         self.tableau = [0 for i in range(n)]
@@ -28,9 +27,9 @@ class Interprerteur:
         for i in range(len(instructions)):
             char = instructions[i]
 
-            if char is '[':
+            if char == '[':
                 pile.empiler(i)
-            elif char is ']':
+            elif char == ']':
                 indice_crochet_ouvrant = pile.depiler()
                 positions_des_crochets.append((indice_crochet_ouvrant, i))
             
@@ -93,8 +92,6 @@ class Interprerteur:
                 instructionIndex +=1
 
                 self.tableau[self.pointeur]  = call_js_function("userInput")
-
-                self.userInput = None
                     
 
             # Affiche l'octet pointé
@@ -123,7 +120,7 @@ class Interprerteur:
                     instructionIndex +=1
 
             # wait `speed` ms
-            if char != '[' and char != ']':
+            if char != '[' and char != ']' and self.speed > 0.1:
                 sleep(self.speed)
 
         return self.tableau
