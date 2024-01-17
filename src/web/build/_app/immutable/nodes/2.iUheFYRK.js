@@ -1249,12 +1249,16 @@ function create_if_block_1(ctx) {
 function create_if_block(ctx) {
   let div1;
   let div0;
-  let textContent = `<h1 class="text-xl font-bold mb-auto">Mais dit moi Jammy, comment cela fonctionne-t-il ?</h1> <p class="mt-4 text-base mb-auto">Le package permettant de faire interagir l&#39;interpreteur codé python et cette fenêtre web
-					(svelte X typescript) est <span class="font-bold">pywebview</span>. Ainsi j&#39;ai pu exprimer
-					mes talents de développeur web pour faire une interface graphique à mon interpréteur.
+  let textContent = `<h1 class="text-xl font-bold mb-auto">Mais dit moi Jammy, comment cela fonctionne-t-il ?</h1> <p class="mt-4 text-base mb-auto">Le package permettant d&#39;interagir avec l&#39;interpréteur codé en Python et cette fenêtre web
+					(Svelte X TypeScript) est <span class="font-bold">pywebview</span>. Ainsi, j&#39;ai pu
+					exprimer mes talents de développeur web pour créer une interface graphique pour mon
+					interpréteur.
 					<br/> <br/>
-					Vous pouvez notamment aller voir les classes <span class="font-bold">Api</span> et
-					<span class="font-bold">Interpreteur</span> dans le code python pour mieux comprendre le fonctionnement.</p>`;
+					Vous pouvez notamment consulter les classes <span class="font-bold">Api</span> et
+					<span class="font-bold">Interpreteur</span>
+					dans le code Python pour mieux comprendre le fonctionnement. Vous pouvez également
+					consulter le code de cette page sous
+					<span class="font-bold">web/src/routes/+page.svelte</span>.</p>`;
   let div0_transition;
   let div1_transition;
   let current;
@@ -1271,7 +1275,7 @@ function create_if_block(ctx) {
       div1 = claim_element(nodes, "DIV", { class: true });
       var div1_nodes = children(div1);
       div0 = claim_element(div1_nodes, "DIV", { class: true, ["data-svelte-h"]: true });
-      if (get_svelte_dataset(div0) !== "svelte-1bm15hf")
+      if (get_svelte_dataset(div0) !== "svelte-850yh4")
         div0.innerHTML = textContent;
       div1_nodes.forEach(detach);
       this.h();
@@ -1803,9 +1807,11 @@ function instance($$self, $$props, $$invalidate) {
     1027) {
       {
         let instructions = programme.split("");
-        instructions[instructionIndex] = `{span class="text-red-500 font-bold"}${instructions[instructionIndex]}{/span}`;
-        $$invalidate(1, programmeHtml = instructions.join(""));
-        $$invalidate(1, programmeHtml = programmeHtml.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("{", "<").replaceAll("}", ">"));
+        if (instructions[instructionIndex] !== "[" && instructions[instructionIndex] !== "]") {
+          instructions[instructionIndex] = `{span class="text-red-500 font-bold"}${instructions[instructionIndex]}{/span}`;
+          $$invalidate(1, programmeHtml = instructions.join(""));
+          $$invalidate(1, programmeHtml = programmeHtml.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("{", "<").replaceAll("}", ">"));
+        }
       }
     }
   };

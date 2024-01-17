@@ -20,15 +20,18 @@
 	$: {
 		//toast.success(instructionIndex.toString());
 		let instructions = programme.split('');
-		instructions[instructionIndex] =
-			`{span class="text-red-500 font-bold"}${instructions[instructionIndex]}{/span}`;
-		programmeHtml = instructions.join('');
 
-		programmeHtml = programmeHtml
-			.replaceAll('<', '&lt;')
-			.replaceAll('>', '&gt;')
-			.replaceAll('{', '<')
-			.replaceAll('}', '>');
+		if (instructions[instructionIndex] !== '[' && instructions[instructionIndex] !== ']') {
+			instructions[instructionIndex] =
+				`{span class="text-red-500 font-bold"}${instructions[instructionIndex]}{/span}`;
+			programmeHtml = instructions.join('');
+
+			programmeHtml = programmeHtml
+				.replaceAll('<', '&lt;')
+				.replaceAll('>', '&gt;')
+				.replaceAll('{', '<')
+				.replaceAll('}', '>');
+		}
 	}
 
 	let values: number[] = [];
@@ -257,13 +260,17 @@
 				</h1>
 
 				<p class="mt-4 text-base mb-auto">
-					Le package permettant de faire interagir l'interpreteur codé python et cette fenêtre web
-					(svelte X typescript) est <span class="font-bold">pywebview</span>. Ainsi j'ai pu exprimer
-					mes talents de développeur web pour faire une interface graphique à mon interpréteur.
+					Le package permettant d'interagir avec l'interpréteur codé en Python et cette fenêtre web
+					(Svelte X TypeScript) est <span class="font-bold">pywebview</span>. Ainsi, j'ai pu
+					exprimer mes talents de développeur web pour créer une interface graphique pour mon
+					interpréteur.
 					<br />
 					<br />
-					Vous pouvez notamment aller voir les classes <span class="font-bold">Api</span> et
-					<span class="font-bold">Interpreteur</span> dans le code python pour mieux comprendre le fonctionnement.
+					Vous pouvez notamment consulter les classes <span class="font-bold">Api</span> et
+					<span class="font-bold">Interpreteur</span>
+					dans le code Python pour mieux comprendre le fonctionnement. Vous pouvez également
+					consulter le code de cette page sous
+					<span class="font-bold">web/src/routes/+page.svelte</span>.
 				</p>
 			</div>
 		</div>
