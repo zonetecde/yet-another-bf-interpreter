@@ -120,10 +120,12 @@
 	}
 </script>
 
-<!-- menu icon top left-->
 {#if openMenu}
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
+	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div
 		class="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-50 z-30"
+		on:click={() => (openMenu = false)}
 		transition:fade
 	></div>
 	<div
