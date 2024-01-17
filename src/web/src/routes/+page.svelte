@@ -14,45 +14,81 @@
 	let openMenu = false;
 	let showInfo = false;
 
+	let programmeHtml: string = programme;
+	let instructionIndex = 0;
+
+	$: {
+		//toast.success(instructionIndex.toString());
+		let instructions = programme.split('');
+		instructions[instructionIndex] =
+			`{span class="text-red-500 font-bold"}${instructions[instructionIndex]}{/span}`;
+		programmeHtml = instructions.join('');
+
+		programmeHtml = programmeHtml
+			.replaceAll('<', '&lt;')
+			.replaceAll('>', '&gt;')
+			.replaceAll('{', '<')
+			.replaceAll('}', '>');
+	}
+
 	let values: number[] = [];
 
-	async function executeCode(
-		event: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement }
-	) {
+	/*
+	 * 	Execute le programme brainfuck
+	 */
+	async function executeCode() {
+		// Si déjà en execution, on stop le programme du coté de python
 		if (isExecuting) {
 			isExecuting = false;
 			await Api.api.stopExecution();
 			return;
 		} else {
-			// parametre par defaut
+			// Remet les paramètres par défaut
 			cursorPos.set(0);
 			values = [];
-
+			instructionIndex = 0;
 			isExecuting = true;
 
+			// Appel l'API python pour executer le programme
 			await Api.api.interpretCode(programme, speed);
 
+			// Fin de l'execution du code
 			isExecuting = false;
 		}
 	}
 
 	onMount(() => {
+		/*
+		 * 	Bouge le curseur à gauche ou à droite
+		 */
 		window.move = (direction: 'left' | 'right') => {
 			ruban.moveCursor(direction);
 		};
 
+		/*
+		 * 	Change la valeur de la cellule
+		 */
 		window.change = (value: 'increment' | 'decrement') => {
 			ruban.changeCell(value);
 		};
 
+		/*
+		 * 	Affiche la valeur de la cellule en byte
+		 */
 		window.printBytes = (byte: number) => {
 			toast.success(`[!] - Valeur de la cellule : ${byte}`);
 		};
 
+		/*
+		 * 	Affiche la valeur de la cellule en ASCII
+		 */
 		window.printChar = (text: string) => {
 			toast.success('[.] - Valeur de la cellule (convertie en ASCII) : ' + text);
 		};
 
+		/*
+		 * Demande de l'input à l'utilisateur
+		 */
 		window.userInput = () => {
 			const value = prompt(
 				'[,] - Valeur à écrire (elle sera convertie en son équivalent décimal) : '
@@ -66,8 +102,18 @@
 
 			return byte;
 		};
+
+		/*
+		 *  Change l'index de l'instruction en cours d'execution
+		 */
+		window.changeInstructionIndex = (index: number) => {
+			instructionIndex = index;
+		};
 	});
 
+	/*
+	 * 	Colle un programmes pré-enregistrés
+	 */
 	function recopierCode(code: string) {
 		openMenu = false;
 		programme = code;
@@ -134,10 +180,18 @@
 <div class="flex relative flex-col w-screen h-screen bg-violet-300 pt-20 pb-8">
 	<Ruban bind:this={ruban} bind:values />
 
-	<textarea
-		class="mt-10 h-64 px-2 py-1 border-4 border-violet-400 shadow-2xl outline-none text-xl shadow-violet-600 rounded-xl mx-10"
-		bind:value={programme}
-	/>
+	{#if isExecuting}
+		<p
+			class="code mt-10 h-64 px-2 py-1 border-4 bg-white border-violet-400 shadow-2xl outline-none text-2xl shadow-violet-600 rounded-xl mx-10"
+		>
+			{@html programmeHtml}
+		</p>
+	{:else}
+		<textarea
+			class="code mt-10 h-64 px-2 py-1 border-4 border-violet-400 shadow-2xl outline-none text-2xl shadow-violet-600 rounded-xl mx-10"
+			bind:value={programme}
+		/>
+	{/if}
 
 	<button
 		class={'mt-10 w-32 self-center  duration-150 border-2 hover:scale-105  text-white px-4 py-2 rounded-md' +

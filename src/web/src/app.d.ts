@@ -16,6 +16,7 @@ declare global {
 		move: (direction: 'left' | 'right') => void;
 		change: (direction: 'increment' | 'decrement') => void;
 		userInput: () => void;
+		changeInstructionIndex: (index: number) => void;
 	}
 }
 

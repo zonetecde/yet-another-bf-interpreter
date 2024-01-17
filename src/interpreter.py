@@ -65,6 +65,7 @@ class Interprerteur:
                 self.pointeur += 1
                 instructionIndex +=1
                 call_js_function("move", '"right"')
+
             # recule le pointeur à gauche si possible, sinon erreur.
             elif char == '<':
                 assert self.pointeur > 0, "Brainfuck index out of range"
@@ -120,13 +121,18 @@ class Interprerteur:
                             break
                 else:
                     instructionIndex +=1
+
             else:
                 instructionIndex +=1 # ignore les autres caractères
                 ignorer = True
 
+
+
             # wait `speed` ms
             if char != '[' and char != ']' and not ignorer :
                 sleep(self.speed)
+
+            call_js_function("changeInstructionIndex", instructionIndex)
 
         return self.tableau
         
