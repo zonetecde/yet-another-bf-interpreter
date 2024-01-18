@@ -5,7 +5,7 @@ import socketserver
 import threading
 from api import Api
 
-DEBUG = False
+DEBUG = True
 
 def start_server():
     # Dossier contenant les fichiers du site
@@ -33,7 +33,7 @@ def main():
 
     # Création de la fenêtre avec le site
     website_port = DEBUG and 5173 or 5170
-    window = webview.create_window('BrainFuck Interpreter de Rayane STASZEWSKI de la classe T5 option MATH EXPERTES (alias les meilleurs) (plus précisemment LE MEILLEUR)', 'http://localhost:' + str(website_port), js_api=api, resizable=True, min_size=(800, 600), width=1080, height=720)
+    window = webview.create_window('BrainFuck Interpreter de Rayane STASZEWSKI de la classe T5 option MATHS EXPERTES', 'http://localhost:' + str(website_port), js_api=api, resizable=True, min_size=(800, 600), width=1080, height=720)
     api.set_window(window)
 
     webview.start()

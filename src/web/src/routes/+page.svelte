@@ -187,7 +187,7 @@
 
 	{#if isExecuting}
 		<p
-			class="code mt-10 h-64 px-2 py-1 border-4 bg-white border-violet-400 shadow-2xl outline-none text-2xl shadow-violet-600 rounded-xl mx-10"
+			class="code mt-10 h-64 overflow-y-scroll px-2 py-1 border-4 bg-white border-violet-400 shadow-2xl outline-none text-2xl shadow-violet-600 rounded-xl mx-10"
 		>
 			{@html programmeHtml}
 		</p>
@@ -252,7 +252,7 @@
 			on:click={() => (showInfo = false)}
 		>
 			<div
-				class="fixed flex flex-col items-center justify-center w-4/6 h-4/6 bg-white shadow-2xl text-center px-8 z-40 pt-12 rounded-2xl border-4 border-purple-500"
+				class="fixed flex flex-col items-center justify-center w-4/6 h-5/6 bg-white shadow-2xl text-center px-8 z-40 pt-12 rounded-2xl border-4 border-purple-500"
 				transition:slide={{ axis: 'x' }}
 			>
 				<h1 class="text-xl font-bold mb-auto">
@@ -268,10 +268,20 @@
 					<br />
 					Vous pouvez notamment consulter les classes <span class="font-bold">Api</span> et
 					<span class="font-bold">Interpreteur</span>
-					dans le code Python pour mieux comprendre le fonctionnement. Vous pouvez également
-					consulter le code de cette page sous
+					dans le code Python pour mieux comprendre le fonctionnement. Vous pouvez également consulter
+					le code de cette page sous
 					<span class="font-bold">web/src/routes/+page.svelte</span>.
+
+					<br />
+					<br />
 				</p>
+				<div class="flex flex-row mb-5 gap-x-2 items-center justify-center">
+					<span>Temps passé à ne pas réviser les maths :</span>
+					<img
+						src="https://wakatime.com/badge/user/b8ecff52-7743-4a1e-8b28-93fcce7c9b7d/project/018d092f-0a3b-4034-bbed-a72be46061d6.svg"
+						alt="wakatime"
+					/>
+				</div>
 			</div>
 		</div>
 	{/if}
