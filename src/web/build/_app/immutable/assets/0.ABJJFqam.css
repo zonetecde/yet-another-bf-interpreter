@@ -561,6 +561,10 @@ video {
   margin-right: 2.5rem;
 }
 
+.mb-5{
+  margin-bottom: 1.25rem;
+}
+
 .mb-auto{
   margin-bottom: auto;
 }
@@ -601,8 +605,8 @@ video {
   height: 3rem;
 }
 
-.h-4\/6{
-  height: 66.666667%;
+.h-5\/6{
+  height: 83.333333%;
 }
 
 .h-6{

@@ -1221,7 +1221,7 @@ function create_if_block_1(ctx) {
     },
     h() {
       html_tag.a = null;
-      attr(p, "class", "code mt-10 h-64 px-2 py-1 border-4 bg-white border-violet-400 shadow-2xl outline-none text-2xl shadow-violet-600 rounded-xl mx-10");
+      attr(p, "class", "code mt-10 h-64 overflow-y-scroll px-2 py-1 border-4 bg-white border-violet-400 shadow-2xl outline-none text-2xl shadow-violet-600 rounded-xl mx-10");
     },
     m(target, anchor) {
       insert_hydration(target, p, anchor);
@@ -1247,8 +1247,8 @@ function create_if_block_1(ctx) {
   };
 }
 function create_if_block(ctx) {
+  let div2;
   let div1;
-  let div0;
   let textContent = `<h1 class="text-xl font-bold mb-auto">Mais dit moi Jammy, comment cela fonctionne-t-il ?</h1> <p class="mt-4 text-base mb-auto">Le package permettant d&#39;interagir avec l&#39;interpréteur codé en Python et cette fenêtre web
 					(Svelte X TypeScript) est <span class="font-bold">pywebview</span>. Ainsi, j&#39;ai pu
 					exprimer mes talents de développeur web pour créer une interface graphique pour mon
@@ -1256,41 +1256,43 @@ function create_if_block(ctx) {
 					<br/> <br/>
 					Vous pouvez notamment consulter les classes <span class="font-bold">Api</span> et
 					<span class="font-bold">Interpreteur</span>
-					dans le code Python pour mieux comprendre le fonctionnement. Vous pouvez également
-					consulter le code de cette page sous
-					<span class="font-bold">web/src/routes/+page.svelte</span>.</p>`;
-  let div0_transition;
+					dans le code Python pour mieux comprendre le fonctionnement. Vous pouvez également consulter
+					le code de cette page sous
+					<span class="font-bold">web/src/routes/+page.svelte</span>.
+
+					<br/> <br/></p> <div class="flex flex-row mb-5 gap-x-2 items-center justify-center"><span>Temps passé à ne pas réviser les maths :</span> <img src="https://wakatime.com/badge/user/b8ecff52-7743-4a1e-8b28-93fcce7c9b7d/project/018d092f-0a3b-4034-bbed-a72be46061d6.svg" alt="wakatime"/></div>`;
   let div1_transition;
+  let div2_transition;
   let current;
   let mounted;
   let dispose;
   return {
     c() {
+      div2 = element("div");
       div1 = element("div");
-      div0 = element("div");
-      div0.innerHTML = textContent;
+      div1.innerHTML = textContent;
       this.h();
     },
     l(nodes) {
-      div1 = claim_element(nodes, "DIV", { class: true });
-      var div1_nodes = children(div1);
-      div0 = claim_element(div1_nodes, "DIV", { class: true, ["data-svelte-h"]: true });
-      if (get_svelte_dataset(div0) !== "svelte-850yh4")
-        div0.innerHTML = textContent;
-      div1_nodes.forEach(detach);
+      div2 = claim_element(nodes, "DIV", { class: true });
+      var div2_nodes = children(div2);
+      div1 = claim_element(div2_nodes, "DIV", { class: true, ["data-svelte-h"]: true });
+      if (get_svelte_dataset(div1) !== "svelte-1r4z4s1")
+        div1.innerHTML = textContent;
+      div2_nodes.forEach(detach);
       this.h();
     },
     h() {
-      attr(div0, "class", "fixed flex flex-col items-center justify-center w-4/6 h-4/6 bg-white shadow-2xl text-center px-8 z-40 pt-12 rounded-2xl border-4 border-purple-500");
-      attr(div1, "class", "fixed flex items-center justify-center top-0 left-0 w-screen h-screen bg-black bg-opacity-50 z-30");
+      attr(div1, "class", "fixed flex flex-col items-center justify-center w-4/6 h-5/6 bg-white shadow-2xl text-center px-8 z-40 pt-12 rounded-2xl border-4 border-purple-500");
+      attr(div2, "class", "fixed flex items-center justify-center top-0 left-0 w-screen h-screen bg-black bg-opacity-50 z-30");
     },
     m(target, anchor) {
-      insert_hydration(target, div1, anchor);
-      append_hydration(div1, div0);
+      insert_hydration(target, div2, anchor);
+      append_hydration(div2, div1);
       current = true;
       if (!mounted) {
         dispose = listen(
-          div1,
+          div2,
           "click",
           /*click_handler_3*/
           ctx[19]
@@ -1306,43 +1308,43 @@ function create_if_block(ctx) {
         add_render_callback(() => {
           if (!current)
             return;
-          if (!div0_transition)
-            div0_transition = create_bidirectional_transition(div0, slide, { axis: "x" }, true);
-          div0_transition.run(1);
+          if (!div1_transition)
+            div1_transition = create_bidirectional_transition(div1, slide, { axis: "x" }, true);
+          div1_transition.run(1);
         });
       }
       if (local) {
         add_render_callback(() => {
           if (!current)
             return;
-          if (!div1_transition)
-            div1_transition = create_bidirectional_transition(div1, fade, {}, true);
-          div1_transition.run(1);
+          if (!div2_transition)
+            div2_transition = create_bidirectional_transition(div2, fade, {}, true);
+          div2_transition.run(1);
         });
       }
       current = true;
     },
     o(local) {
       if (local) {
-        if (!div0_transition)
-          div0_transition = create_bidirectional_transition(div0, slide, { axis: "x" }, false);
-        div0_transition.run(0);
+        if (!div1_transition)
+          div1_transition = create_bidirectional_transition(div1, slide, { axis: "x" }, false);
+        div1_transition.run(0);
       }
       if (local) {
-        if (!div1_transition)
-          div1_transition = create_bidirectional_transition(div1, fade, {}, false);
-        div1_transition.run(0);
+        if (!div2_transition)
+          div2_transition = create_bidirectional_transition(div2, fade, {}, false);
+        div2_transition.run(0);
       }
       current = false;
     },
     d(detaching) {
       if (detaching) {
-        detach(div1);
+        detach(div2);
       }
-      if (detaching && div0_transition)
-        div0_transition.end();
       if (detaching && div1_transition)
         div1_transition.end();
+      if (detaching && div2_transition)
+        div2_transition.end();
       mounted = false;
       dispose();
     }
